@@ -1,0 +1,36 @@
+pipeline {
+    agent {
+        docker {
+            image 'python:3.9' // Specify your desired Python version
+            args '-u root'     // Run as root user, if necessary
+        }
+    }
+
+    triggers {
+        cron('H * * * *') // Executes every hour
+    }
+
+    stages {
+        stage('Extract') {
+            steps {
+                sh 'echo "Extracting data..."'
+                sh 'python -c "print(\'Data extracted\')"'
+            }
+        }
+
+        stage('Transform') {
+            steps {
+                sh 'echo "Transforming data..."'
+                sh 'python -c "print(\'Data transformed\')"'
+            }
+        }
+
+        stage('Load') {
+            steps {
+                sh 'echo "Loading data..."'
+                sh 'python -c "print(\'Data loaded\')"'
+            }
+        }
+    }
+}
+
